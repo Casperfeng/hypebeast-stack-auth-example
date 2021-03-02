@@ -1,0 +1,13 @@
+
+version: "3.8"
+
+#This file is only intended for running the project locally. Do not use this in production.
+services:
+  postgresContainer:
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=test
+      - POSTGRES_USER=test
+      - POSTGRES_DB=test

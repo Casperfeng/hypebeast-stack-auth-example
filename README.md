@@ -12,3 +12,7 @@ Prerequisites:
 - JWT
 - GraphQL + GraphQL Codegen
 - PostgreSQL
+
+### Database
+In order to run a local postgres database run
+- ```docker-compose -f database.docker-compose.yml up -d```

@@ -1,6 +1,9 @@
 import { ApolloServer } from 'apollo-server-express';
 import express from 'express';
 import "reflect-metadata";
+import { buildSchema } from 'type-graphql';
+import { createConnection } from 'typeorm';
+import { UserResolver } from './UserResolver';
 
 
 //initialize app
@@ -8,17 +11,12 @@ import "reflect-metadata";
     const app = express();
     app.get('/', (_, res) => res.send('hello'));
 
+    await createConnection();
+
     const apolloServer = new ApolloServer({
-        typeDefs: `
-        type Query {
-            hello: String!
-        }
-        `, 
-        resolvers: {
-            Query: {
-                hello: () => 'hello world'
-            }
-        }
+       schema: await buildSchema({
+           resolvers: [UserResolver]
+       })
     });
 
     apolloServer.applyMiddleware( { app })

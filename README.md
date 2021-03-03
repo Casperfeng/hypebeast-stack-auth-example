@@ -13,6 +13,9 @@ Prerequisites:
 - GraphQL + GraphQL Codegen
 - PostgreSQL
 
+### Running locally
+To run the application locally, make sure a database is up and running then run
+- ```npm run dev```
 ### Database
 In order to run a local postgres database run
 - ```docker-compose -f database.docker-compose.yml up -d```

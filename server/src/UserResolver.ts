@@ -54,7 +54,7 @@ export class UserResolver {
             throw new Error('could not find user');
         }
 
-        const valid = compare(password, user.password);
+        const valid = await compare(password, user.password);
 
         if (!valid) {
             throw new Error('incorrect password');

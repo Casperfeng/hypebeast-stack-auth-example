@@ -5,6 +5,7 @@
    "devDependencies": {
       "@types/bcryptjs": "^2.4.2",
       "@types/graphql": "^14.5.0",
+      "@types/jsonwebtoken": "^8.5.0",
       "@types/node": "^14.14.31",
       "nodemon": "^2.0.7",
       "ts-node": "9.1.1",
@@ -15,6 +16,7 @@
       "bcryptjs": "^2.4.3",
       "express": "^4.17.1",
       "graphql": "^15.5.0",
+      "jsonwebtoken": "^8.5.1",
       "pg": "^8.4.0",
       "reflect-metadata": "^0.1.10",
       "type-graphql": "^1.1.1",

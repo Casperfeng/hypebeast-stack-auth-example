@@ -4,9 +4,16 @@ import { User } from './entity/User';
 
 @Resolver()
 export class UserResolver {
-    @Query( () => String )
-    hello(){
-        return 'hi!'
+    @Query( () => [User] )
+    async users(){
+        try {
+            const users = await User.find();
+            return users;
+        } catch (e) {
+            console.log(e);
+            return [];
+        }
+
     }
     
     @Mutation(() => Boolean )
@@ -24,6 +31,7 @@ export class UserResolver {
             );
             return true;
         } catch (e) {
+            console.log(e);
         return false;
         }
     }

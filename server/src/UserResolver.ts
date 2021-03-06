@@ -1,6 +1,6 @@
 import { compare, hash } from 'bcryptjs';
-import { sign } from 'jsonwebtoken';
 import { Arg, Ctx, Field, Mutation, ObjectType, Query, Resolver } from 'type-graphql';
+import { createAccessToken, createRefreshToken } from './auth';
 import { User } from './entity/User';
 import { MyContext } from './MyContext';
 
@@ -63,17 +63,14 @@ export class UserResolver {
         }
 
         //below is authenticated
-        res.cookie('jid', sign({ userId: user.id}, 'ewjfoiejwifwj', {
-            expiresIn: "7d"
-        }),        
+        res.cookie('jid', createRefreshToken(user),        
         {
             httpOnly: true
-        });
+        }
+        );
 
         return {
-            accessToken: sign({ userId: user.id}, 'asiodjioasjd4', {
-                expiresIn: "60m"
-            })
+            accessToken: createAccessToken(user)
         };
     }
 }

@@ -2,7 +2,7 @@ import { verify } from 'jsonwebtoken';
 import { MiddlewareFn } from 'type-graphql';
 import { MyContext } from './MyContext';
 
-// expect bearer authorization
+// used to verify the bearer token
 export const isAuth: MiddlewareFn<MyContext> = ({context}, next) => {
     const authorization = context.req.headers['authorization'];
     if (!authorization) {

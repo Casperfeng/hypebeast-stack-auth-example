@@ -8,6 +8,7 @@ import { buildSchema } from 'type-graphql';
 import { createConnection } from 'typeorm';
 import { createAccessToken, createRefreshToken } from './auth';
 import { User } from './entity/User';
+import { sendRefreshToken } from './sendRefreshToken';
 import { UserResolver } from './UserResolver';
 
 
@@ -39,9 +40,7 @@ import { UserResolver } from './UserResolver';
         }
 
         //refresh the refresh token
-        res.cookie('jid', createRefreshToken(user), {
-            httpOnly: true
-        });
+       sendRefreshToken(res, createRefreshToken(user));
         
         return res.send({ok: true, accessToken: createAccessToken(user)});
     })

@@ -6,7 +6,7 @@ import { verify } from 'jsonwebtoken';
 import "reflect-metadata";
 import { buildSchema } from 'type-graphql';
 import { createConnection } from 'typeorm';
-import { createAccessToken } from './auth';
+import { createAccessToken, createRefreshToken } from './auth';
 import { User } from './entity/User';
 import { UserResolver } from './UserResolver';
 
@@ -37,6 +37,11 @@ import { UserResolver } from './UserResolver';
         if (!user) {
             return res.send({ok: false, accessToken: ''});
         }
+
+        //refresh the refresh token
+        res.cookie('jid', createRefreshToken(user), {
+            httpOnly: true
+        });
         
         return res.send({ok: true, accessToken: createAccessToken(user)});
     })

@@ -19,6 +19,3 @@ To run the application locally, make sure a database is up and running then run
 ### Database
 In order to run a local postgres database run
 - ```docker-compose -f database.docker-compose.yml up -d```
-
-### env
-Change .env.example to .env when pushed to production

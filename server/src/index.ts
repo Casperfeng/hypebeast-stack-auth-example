@@ -12,7 +12,6 @@ import { UserResolver } from './UserResolver';
     const app = express();
     app.get('/', (_, res) => res.send('hello'));
 
-    console.log(process.env.ACCESS_TOKEN_SECRET);
     await createConnection();
 
     const apolloServer = new ApolloServer({

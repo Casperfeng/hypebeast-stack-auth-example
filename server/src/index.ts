@@ -39,6 +39,10 @@ import { UserResolver } from './UserResolver';
             return res.send({ok: false, accessToken: ''});
         }
 
+        if (user.tokenVersion !== payload.tokenVersion) {
+            return res.send({ok: false, accessToken: ''});
+        }
+
         //refresh the refresh token
        sendRefreshToken(res, createRefreshToken(user));
         

@@ -22,15 +22,20 @@
     "typescript": "~3.7.2"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "1.21.3",
     "@types/graphql": "^14.5.0",
     "eslint-plugin-prettier": "^3.1.4",
-    "prettier": "2.0.5"
+    "prettier": "2.0.5",
+    "@graphql-codegen/typescript-react-apollo": "2.2.3",
+    "@graphql-codegen/typescript-operations": "1.17.15",
+    "@graphql-codegen/typescript": "1.21.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "gen": "graphql-codegen --config codegen.yml"
   },
   "eslintConfig": {
     "extends": "react-app"

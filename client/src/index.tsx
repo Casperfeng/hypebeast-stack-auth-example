@@ -3,8 +3,8 @@ import ApolloClient from "apollo-boost";
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { getAccessToken } from './accessToken';
+import App from './App';
 import './index.css';
-import Routes from './navigation/Routes';
 import * as serviceWorker from './serviceWorker';
 
 
@@ -27,7 +27,7 @@ const client = new ApolloClient({
 ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client as any}>
-      <Routes />
+      <App />
       </ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root')

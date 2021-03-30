@@ -1,16 +1,26 @@
-import React from 'react';
-import { useHelloQuery } from './generated/graphql';
+import React, { useEffect, useState } from 'react';
+import Routes from './navigation/Routes';
 
 const App: React.FC = () => {
-  const { data, loading } = useHelloQuery()
+  const [loading, setLoading] =  useState(true);
 
-  if (loading || !data) {
-    return <>loading...</>
+  useEffect(() => {
+   fetch('http://localhost:4000/refresh_token', {
+     method: 'POST',
+     credentials: "include"
+   }).then(async x => {
+     const data = await x.json();
+     console.log(data);
+     setLoading(false);
+   })
+  },[])
+
+  if (loading){
+    return <div>loading...</div>;
   }
+
   return (
-    <>
-    {data.hello}
-    </>
+    <Routes />
   );
 }
 

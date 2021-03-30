@@ -1,14 +1,21 @@
+import { useQuery } from '@apollo/react-hooks';
+import { gql } from 'apollo-boost';
 import React from 'react';
-import { Link } from 'react-router-dom';
 
-function App() {
+const App: React.FC = () => {
+  const { data, loading } = useQuery(gql`
+  {
+    hello
+  }
+
+  `);
+
+  if (loading) {
+    return <>loading...</>
+  }
   return (
     <>
-      <h1>Velkommen til JrC React-TS Baseline!</h1>
-      <ul>
-        <li>Les README for informasjon om bruk</li>
-      </ul>
-      <Link to="/example">Til eksempelside</Link>
+    {JSON.stringify(data)}
     </>
   );
 }

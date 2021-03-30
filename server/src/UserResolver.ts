@@ -15,6 +15,12 @@ class LoginResponse {
 };
 @Resolver()
 export class UserResolver {
+
+    @Query(() => String)
+    hello(){
+        return "hello"
+    }
+
     @Query( () => [User] )
     async users(){
         try {
@@ -24,7 +30,6 @@ export class UserResolver {
             console.log(e);
             return [];
         }
-
     }
 
     @Query(() => String)

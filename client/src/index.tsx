@@ -1,15 +1,21 @@
+import { ApolloProvider } from '@apollo/react-hooks';
+import ApolloClient from "apollo-boost";
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import * as serviceWorker from './serviceWorker';
-import ExampleProvider from './context/ExampleContext';
 import Routes from './navigation/Routes';
+import * as serviceWorker from './serviceWorker';
+
+
+const client = new ApolloClient({
+  uri: 'http://localhost:4000/graphql',
+});
 
 ReactDOM.render(
   <React.StrictMode>
-    <ExampleProvider>
+    <ApolloProvider client={client as any}>
       <Routes />
-    </ExampleProvider>
+      </ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

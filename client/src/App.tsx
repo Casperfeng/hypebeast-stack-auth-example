@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { setAccessToken } from './accessToken';
 import Routes from './navigation/Routes';
 
 const App: React.FC = () => {
@@ -9,8 +10,8 @@ const App: React.FC = () => {
      method: 'POST',
      credentials: "include"
    }).then(async x => {
-     const data = await x.json();
-     console.log(data);
+     const {accessToken} = await x.json();
+     setAccessToken(accessToken);
      setLoading(false);
    })
   },[])

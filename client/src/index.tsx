@@ -2,6 +2,7 @@ import { ApolloProvider } from '@apollo/react-hooks';
 import ApolloClient from "apollo-boost";
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { getAccessToken } from './accessToken';
 import './index.css';
 import Routes from './navigation/Routes';
 import * as serviceWorker from './serviceWorker';
@@ -9,6 +10,18 @@ import * as serviceWorker from './serviceWorker';
 
 const client = new ApolloClient({
   uri: 'http://localhost:4000/graphql',
+  credentials: "include",
+  request: (operation) => {
+    const accessToken = getAccessToken();
+    if (accessToken) {
+      operation.setContext({
+        headers: {
+          authorization: `bearer ${accessToken}`
+        }
+      });
+    }
+
+  }
 });
 
 ReactDOM.render(

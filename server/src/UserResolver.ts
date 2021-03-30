@@ -39,7 +39,7 @@ export class UserResolver {
     ) {
         return payload?.userId;
     }
-    
+
     @Mutation(() => Boolean )
     async register(
         @Arg('email') email: string,

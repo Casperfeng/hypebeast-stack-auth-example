@@ -1,5 +1,6 @@
 import { ApolloServer } from 'apollo-server-express';
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 import "dotenv/config";
 import express from 'express';
 import { verify } from 'jsonwebtoken';
@@ -15,6 +16,10 @@ import { UserResolver } from './UserResolver';
 // initialize app
 (async () => {
     const app = express();
+    app.use(cors({
+        origin: 'http://localhost:3000',
+        credentials: true
+    }));
     app.use(cookieParser());
     app.get('/', (_, res) => res.send('hello'));
     // route to check cookie and give refresh token
@@ -59,7 +64,7 @@ import { UserResolver } from './UserResolver';
        })
     });
 
-    apolloServer.applyMiddleware( { app })
+    apolloServer.applyMiddleware( { app, cors: false })
     
     app.listen(4000, () => {
         console.log("express server started")

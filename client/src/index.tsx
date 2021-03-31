@@ -2,11 +2,12 @@ import { ApolloProvider } from '@apollo/react-hooks';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloClient } from 'apollo-client';
 import { ApolloLink, Observable } from 'apollo-link';
-import { onError } from 'apollo-link-error';
 import { HttpLink } from 'apollo-link-http';
+import { TokenRefreshLink } from "apollo-link-token-refresh";
+import jwtDecode from 'jwt-decode';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { getAccessToken } from './accessToken';
+import { getAccessToken, setAccessToken } from './accessToken';
 import App from './App';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
@@ -44,10 +45,34 @@ const requestLink = new ApolloLink((operation, forward) =>
 
 const client = new ApolloClient({
   link: ApolloLink.from([
-    onError(({ graphQLErrors, networkError }) => {
-      console.log(graphQLErrors);
-      console.log(networkError);
-    }),
+    new TokenRefreshLink({
+      accessTokenField: 'accessToken',
+      isTokenValidOrUndefined: () => {
+        const token = getAccessToken();
+
+        if (!token) {
+          return true;
+        }
+        try {
+          const { exp } = jwtDecode(token) as any;
+          if (Date.now() >= exp * 1000) {
+            return false;
+          } else {
+            return true;
+          }
+        } catch {
+          return false;
+        }
+      },
+      fetchAccessToken: () => {
+        return fetch('http://localhost:4000/refresh_token', {
+          method: 'POST',
+          credentials: "include"
+        });
+      },
+      handleFetch: (accessToken: string) => setAccessToken(accessToken),
+      handleError: (err: Error) => console.error(err)
+    }) as any,
     requestLink,
     new HttpLink({
       uri: 'http://localhost:4000/graphql',

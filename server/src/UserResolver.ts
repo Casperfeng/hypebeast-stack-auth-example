@@ -13,6 +13,8 @@ import { sendRefreshToken } from './sendRefreshToken';
 class LoginResponse {
     @Field()
     accessToken: String
+    @Field(() => User)
+    user: User
 };
 @Resolver()
 export class UserResolver {
@@ -80,6 +82,14 @@ export class UserResolver {
     }
 
     @Mutation(() => Boolean)
+    async logout(
+        @Ctx() { res }: MyContext
+    ) {
+       sendRefreshToken(res, '');
+       return true;
+    }
+
+    @Mutation(() => Boolean)
     async revokeRefreshTokensForUser(
         @Arg('userId', () => Int) userId: number
     ) {
@@ -109,7 +119,8 @@ export class UserResolver {
         sendRefreshToken(res, createRefreshToken(user));
 
         return {
-            accessToken: createAccessToken(user)
+            accessToken: createAccessToken(user),
+            user
         };
     }
 }

@@ -7,7 +7,7 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({}) => {
-  const {data, loading } = useMeQuery({ fetchPolicy: 'network-only' });
+  const {data, loading } = useMeQuery();
 
   let body: any = null;
 
